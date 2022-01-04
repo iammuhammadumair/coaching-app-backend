@@ -1,0 +1,35 @@
+{
+  "name": "functions",
+  "scripts": {
+    "build": "tsc",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "12"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^9.11.1",
+    "firebase-functions": "^3.14.1",
+    "googleapis": "^66.0.0",
+    "mangopay2-nodejs-sdk": "^1.14.5",
+    "moment-timezone": "^0.5.32",
+    "nodemailer": "^6.4.17",
+    "nodemailer-smtp-transport": "^2.7.4",
+    "opentok": "^2.10.0",
+    "request-promise-native": "^1.0.9"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^6.4.0",
+    "@types/nodemailer-smtp-transport": "^2.7.4",
+    "@types/opentok": "^2.9.0",
+    "@types/request-promise-native": "^1.0.17",
+    "firebase-functions-test": "^0.2.0",
+    "typescript": "^3.8.0"
+  },
+  "private": true
+}
