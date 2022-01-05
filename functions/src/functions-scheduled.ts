@@ -1,4 +1,4 @@
-import { sendSecondBookingReminderToClient,sendSecondBookingReminderToCoach,sendBookingReminderToClient, sendBookingReminderToCoach, getBookingClient, getBookingCoach, getUserById, sendEmail, getUserByEmail } from "./utils";
+import { sendSecondBookingReminderToClient,sendSecondBookingReminderToCoach,sendBookingReminderToClient, sendBookingReminderToCoach, getBookingClient, getBookingCoach, getUserById, sendEmail } from "./utils";
 import { mangoPayPayout, mangoPaySale } from './functions-http';
 
 import * as moment from 'moment-timezone';

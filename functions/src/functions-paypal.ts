@@ -372,13 +372,14 @@ export async function paypalWebhook(req: any, res:any){
 export async function paypalPayout(coach: any, clientt: any) {
 
   const coachCut = Math.round(coach.price * 0.83);
+  const recipient_type = "EMAIL";
 
   const requestBody = {
     "sender_batch_header": {
-      "recipient_type": "EMAIL",
+      "recipient_type": recipient_type,
       "email_message": "Payment from " + clientt.firstname + " " + clientt.lastname,
       "note": "Enjoy your Payout!!",
-      "sender_batch_id": new Date().getTime(),
+      "sender_batch_id": String(new Date().getTime()),
       "email_subject": "Session Payout Transaction"
     },
     "items": [{

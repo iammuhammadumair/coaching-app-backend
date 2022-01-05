@@ -9,10 +9,11 @@
     "logs": "firebase functions:log"
   },
   "engines": {
-    "node": "12"
+    "node": "14"
   },
   "main": "lib/index.js",
   "dependencies": {
+    "@paypal/payouts-sdk": "^1.1.1",
     "firebase-admin": "^9.11.1",
     "firebase-functions": "^3.14.1",
     "googleapis": "^66.0.0",
@@ -27,6 +28,7 @@
     "@types/nodemailer": "^6.4.0",
     "@types/nodemailer-smtp-transport": "^2.7.4",
     "@types/opentok": "^2.9.0",
+    "@types/paypal__payouts-sdk": "^1.0.3",
     "@types/request-promise-native": "^1.0.17",
     "firebase-functions-test": "^0.2.0",
     "typescript": "^3.8.0"
