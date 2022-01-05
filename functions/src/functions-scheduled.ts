@@ -1,11 +1,13 @@
 import { sendSecondBookingReminderToClient,sendSecondBookingReminderToCoach,sendBookingReminderToClient, sendBookingReminderToCoach, getBookingClient, getBookingCoach, getUserById, sendEmail, getUserByEmail } from "./utils";
+import { mangoPayPayout, mangoPaySale } from './functions-http';
+
 import * as moment from 'moment-timezone';
 import * as mangopay  from 'mangopay2-nodejs-sdk';
 import { firestoreDB } from '.';
 import * as functions from 'firebase-functions';
 import * as request from "request-promise-native";
 
-const coachhubUser = '71962424';
+// const coachhubUser = '71962424';
 const coachhubUserWallet = '71962426';
 
 const mangopayApi = new mangopay({
@@ -143,53 +145,38 @@ async function chargeForSession(booking: any) {
 
 async function chargeCoachee(coachee: any, coach: any, booking: any) {
     try {
-        console.log(`Charging session between ${coachee.mangoCardId} and ${coach.mangoBankAccountId}`);
-        // 100% goes to the coach
-        const payIn: any = {
-            "AuthorId": coachee.mangoUserId,
-            "CreditedWalletId": coach.mangoWallet,
-            "PaymentType": "CARD",
-            "ExecutionType": "DIRECT",
-            "DebitedFunds": {"Currency": coach.currency, "Amount": coach.price * 100},
-            "Fees": {"Currency": "EUR", "Amount": 0},
-            "SecureModeReturnURL": "https://succeed.world/",
-            "CardId": coachee.mangoCardId,
-            "SecureMode": "DEFAULT",
-            "StatementDescriptor": "Succeed",
-            "Culture": "EN"
-        };
-        const payInRes = await mangopayApi.PayIns.create(payIn);
-        console.log('Session successfully charged (coachee): ' + JSON.stringify(payInRes))
 
-        // Mark session as paid
-        await markBookingAsPaid(booking).then(
-            async () => {
-                console.log('Session marked as paid!');
-                // Send 17% to coachhub
-                const coachhubCut = Math.round(coach.price * 100 * 0.17);
-                const coachUser = await getUserByEmail(coach.email);
-                const transfer = {
-                    "AuthorId": coachUser.mangoUserId,
-                    "DebitedFunds": {
-                        "Currency": coach.currency,
-                        "Amount": coachhubCut
-                    },
-                    "Fees": {
-                        "Currency": "EUR",
-                        "Amount": "0"
-                    },
-                    "CreditedUserId": coachhubUser,
-                    "CreditedWalletId": coachhubUserWallet,
-                    "DebitedWalletId": coach.mangoWallet
-                };
-                const transferRes = mangopayApi.Transfers.create(transfer as any);
-                console.log('Funds moved to coach bank account: ' + JSON.stringify(transferRes));
-            }
-        ).catch(e => {
-            console.log('Session coud not be marked as paid!');
-            console.log(JSON.stringify(e));
-            throw e;
-        });
+
+
+        if(coachee.paymentGateway === 'mangopay'){
+            console.log(`Charging session between ${coachee.paymentId} and ${coach.mangoWalletId}`);
+            // deduct amount from student account
+            await mangoPaySale(coachee, coach)
+            
+            await markBookingAsPaid(booking).catch(e => {
+             console.log('Session coud not be marked as paid!');
+             console.log(JSON.stringify(e));
+             throw e;
+            });
+ 
+            // Send 17% to the coachhub 
+            await mangoPayPayout(coach)
+         }
+
+       // if(coachee.paymentGateway === 'paypal'){
+        //     console.log(`Charging session between ${coachee.paymentId} and ${coach.paypalPayerId}`);
+        //     const a = await paypalSale(coachee, coach);
+
+        //     console.log('sale: ', a)
+
+        //     markBookingAsPaid(booking).catch(e => {throw e;});
+
+        //     // Send 85% to the coach bank account
+        //     // const b = await paypalPayout(coach)
+        //     // console.log('payout: ', b);
+
+        // }
+     
     } catch(e) {
         console.log('Charging coachee failed: ' + JSON.stringify(e));
         throw e;

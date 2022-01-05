@@ -1,6 +1,8 @@
 import * as OpenTok from 'opentok';
 import * as mangopay  from 'mangopay2-nodejs-sdk';
 import { firestoreDB } from '.';
+import { getUserByEmail } from "./utils"
+
 
 const mangopayApi = new mangopay({
     clientId: 'succeedprod',
@@ -11,6 +13,24 @@ const mangopayApi = new mangopay({
   // Set the right production API url. If testing, omit the property since it defaults to sandbox URL
 //   baseUrl: 'https://api.sandbox.mangopay.com'
 });
+
+const coachhubUser = '71962424';
+const coachhubUserWallet = '71962426';
+
+// export async function testSession(req: any, res: any){
+
+//     const { booking, session } = req.body;
+//     const bookingsRef = firestoreDB.collection('bookings');
+//     bookingsRef.doc(booking).set({
+//                     sessionId: session
+//                 }).then((bookingRes: any) => {
+//                     console.log('booking doc updated: ', bookingRes);
+//                     return res.status(200).send({result: 'success', bookingRes});
+//                 }).catch((error: any) => {
+//                     console.log('catch: ',error);
+//                     return res.status(200).send({result: 'error', message: 'Session could not be created',error});
+//                 });
+// }
 
 export async function createSession(req: any, res: any, opentok: any) {
     try {
@@ -183,4 +203,48 @@ export async function getAccessToken(req: any, res: any) {
         return res.status(400);
     }
     return res.status(200).send({token: data.token});
+}
+
+export async function mangoPaySale(coachee: any, coach: any){
+    const payIn: any = {
+        "AuthorId": coachee.mangoUserId,
+        "CreditedWalletId": coach.mangoWallet,
+        "PaymentType": "CARD",
+        "ExecutionType": "DIRECT",
+        // TODO: handle amount in website
+        "DebitedFunds": {"Currency": coach.currency, "Amount": coach.price * 100},
+        "Fees": {"Currency": "EUR", "Amount": 0},
+        "SecureModeReturnURL": "https://succeed.world/",
+        "CardId": coachee.mangoCardId,
+        "SecureMode": "DEFAULT",
+        "StatementDescriptor": "Succeed",
+        "Culture": "EN"
+    };
+
+    const payInRes = await mangopayApi.PayIns.create(payIn);
+    console.log('Session successfully charged: ' + JSON.stringify(payInRes))
+}
+
+export async function mangoPayPayout(coach: any) {
+    const coachhubCut = Math.round(coach.price * 100 * 0.17);
+    const coachUser = await getUserByEmail(coach.email);
+
+    const transfer = {
+        "AuthorId": coachUser.mangoUserId,
+        "DebitedFunds": {
+            "Currency": coach.currency,
+            "Amount": coachhubCut
+        },
+        "Fees": {
+            "Currency": "EUR",
+            "Amount": "0"
+        },
+        "CreditedUserId": coachhubUser,
+        "CreditedWalletId": coachhubUserWallet,
+        "DebitedWalletId": coach.mangoWallet
+    };
+
+    const transferRes = mangopayApi.Transfers.create(transfer as any);
+    console.log('Funds moved to coach bank account: ' + JSON.stringify(transferRes));
+
 }
