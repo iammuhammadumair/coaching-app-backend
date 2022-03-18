@@ -260,114 +260,28 @@ export async function paypalWebhook(req: any, res:any){
     //get the coach
 
     if(tdata.status !== 'complete'){
-      const coach = await getBookingCoach({coach: tdata.coach})
-      const client = await getBookingClient({client: tdata.client});
-      const payout = await paypalPayout(coach,client)
-      // console.log(payout)
-      if(payout.statusCode === 201) {
+      // const coach = await getBookingCoach({coach: tdata.coach})
+      // const client = await getBookingClient({client: tdata.client});
+      // const payout = await paypalPayout(coach,client)
+      // if(payout.statusCode === 201) {
   
         const transactionObject = {
           status: 'complete',
-          "transaction.payoutBatchId": payout.result.batch_header.payout_batch_id
+          // "transaction.payoutBatchId": payout.result.batch_header.payout_batch_id
         }
   
         await updateTransaction(transaction.docs[0].id, transactionObject)
-      }else {
-        console.log('Payout failed: ',payout)
-        return;
-      }
+      // }else {
+      //   console.log('Payout failed: ',payout)
+      //   return;
+      // }
     }else{
       console.log('Payout Completed Already.')
       return;
     }
   }
-
-  // if(req.body.event_type === 'PAYMENT.SALE.COMPLETED'){
-
-  //   console.log(req.body)
-  //   //get the transaction
-  //   const transaction = await getTransaction(req.body.resource.parent_payment)
-
-  //   if(!transaction) {
-  //     console.log('unable to find record in transaction.')
-  //     return;
-  //   }
-  //   const tdata  = transaction.docs[0].data()
-
-  //   //get the coach
-
-  //   if(tdata.status !== 'complete'){
-  //     const coach = await getBookingCoach({coach: tdata.coach})
-  //     const client = await getBookingClient({client: tdata.client});
-  //     const payout = await paypalPayout(coach,client)
-  //     // console.log(payout)
-  //     if(payout.statusCode === 201) {
-  
-  //       const transactionObject = {
-  //         status: 'complete',
-  //         "transaction.payoutBatchId": payout.result.batch_header.payout_batch_id
-  //       }
-  
-  //       await updateTransaction(transaction.docs[0].id, transactionObject)
-  //     }else {
-  //       console.log('Payout failed: ',payout)
-  //       return;
-  //     }
-  //   }else{
-  //     console.log('Payout Completed Already.')
-  //     return;
-  //   }
-  // }
 }
 
-// export async function testSale(req: any, res: any) {
-//   try {
-
-//     console.log(req.body)
-//     const { paymentCardId,price,currency } = req.body;
-
-//     if (paymentCardId) {
-
-//       const merchants = await getMerchantAccounts();
-//       console.log(merchants)
-
-//       const trans = await gateway.transaction.sale({
-//         paymentMethodToken: paymentCardId,
-//         amount: String(price),
-//         options: {
-//           submitForSettlement: true
-//         },
-//         merchantAccountId: merchants[currency].id
-//       })
-
-//       if(trans.success){
-//         console.log(trans)
-      
-//         const transactionObject = {
-//           status: 'pending',
-//           paymentGateway: 'paypal',
-//           client: "1ymSKT1Bm6W1ogqma9XkILD6c5g2",// cochee.id,
-//           coach: "qiP60gAzc0sty9x9Nj0y", //coach.id
-//           transaction: {
-//             id: trans.transaction['id'],
-//             paymentId: trans.transaction['paypalAccount'].paymentId,
-//             authorizationId: trans.transaction['paypalAccount'].authorizationId
-//           }
-//         }
-//         await createTransactions(transactionObject)
-
-//         return res.status(200).send({error: false, message: 'Transaction Processed.', trans})
-//       }
-//       else{
-//         return res.status(200).send({error: true, message: 'Transaction Failed.', trans})
-//       }
-//     }
-
-//   } catch (errRes) {
-//     console.log(errRes);
-//     return res.status(200).send({error: true, message: 'Transaction Failed.', errRes})
-//   }
-// }
 
 export async function paypalPayout(coach: any, clientt: any) {
 
@@ -423,96 +337,3 @@ export async function paypalPayout(coach: any, clientt: any) {
   }
 
 }
-
-
-
-
-// export async function paypalPayout(req: any, res: any) {
-
-//   const { price,currency, payerId,batchId  } = req.body;
-//   console.log(payerId); 
-//   const coachCut = Math.round(price);
-
-//   const requestBody = {
-//     "sender_batch_header": {
-//       "recipient_type": "PAYPAL_ID",
-//       "email_message": "SDK payouts test txn",
-//       "note": "Enjoy your Payout!!",
-//       "sender_batch_id": batchId,
-//       "email_subject": "This is a test transaction from SDK"
-//     },
-//     "items": [{
-//       "note": "Your 1$ Payout!",
-//       "amount": {
-//         "currency": currency,
-//         "value": coachCut
-//       },
-//       "receiver": payerId,
-//       "sender_item_id": "Test_txn_1"
-//     }]
-//   }
-
-//   // Construct a request object and set desired parameters
-//   // Here, PayoutsPostRequest() creates a POST request to /v1/payments/payouts
-//   const request = new payoutSDK.payouts.PayoutsPostRequest();
-//   request.requestBody(requestBody);
-
-//   try {
-//     const response = await client().execute(request);
-//     console.log(`Response: ${JSON.stringify(response)}`);
-//     // If call returns body in response, you can get the deserialized version from the result attribute of the response.
-//     console.log(`Payouts Create Response: ${JSON.stringify(response.result)}`);
-
-//     return res.status(200).send({error: false, message: 'Transaction Processedss.', response})
-
-//     // return response
-//   } catch (e) {
-//     if (e.statusCode) {
-//       //Handle server side/API failure response
-//       console.log("Status code: ", e.statusCode);
-//       // Parse failure response to get the reason for failure
-//       const error = JSON.parse(e.message)
-//       console.log("Failure response: ", error)
-//       console.log("Headers: ", e.headers)
-
-//       return res.status(200).send({error: true, message: 'Transaction Processedss failed.', e})
-
-//       // return e
-//     } else {
-//       //Hanlde client side failure
-//       console.log(e)
-//       return res.status(200).send({error: true, message: 'Transaction Processedss failed.', e})
-
-//       // return e
-//     }
-//   }
-
-// }
-
-// export async function test(req:any, res:any){
-//   console.log('This will run every 5 minutes!');
-//   const start = moment(new Date()).subtract(2, 'day');
-//   const end = moment(new Date()).add(1, 'day');
-  
-//   // console.log(start,end)
-
-//   console.log(`getting bookings between ${start.format()} and ${end.format()}`);
-//   // console.log(firestoreDB)
-//   const bookingsRef = firestoreDB.collection('bookings');
-//   console.log(bookingsRef)
-//   const bookings = await bookingsRef.orderBy('date', 'asc').startAt(start.toDate())
-//                                     .endAt(end.toDate()).get();
-
-//   console.log(`bookings found: ${bookings.docs.length}`);
-//   for (const booking of bookings.docs) {
-//       const data = booking.data();
-//       if (data) {
-//           const bookingData = data ? {...data, id: booking.id} : null;
-//           console.log('bookingData: ',bookingData)
-//           // sendFirstReminder(bookingData).catch(err => handleError(err, 'sendFirstReminder'));
-//           // sendSecondReminder(bookingData).catch(err => handleError(err, 'sendSecondReminder'));
-//           chargeForSession(bookingData).catch(err => handleError(err, 'chargeForSession'));
-//       }
-//   }
-//   res.status(200).send({booking: bookings})
-// }
