@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "app-3dhomes-prod"
-  }
+    "default": "app-3dhomes-prod",
+    "integration": "app-3dhomes-int"
+  },
+  "targets": {}
 }

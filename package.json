@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@paypal/payouts-sdk": "^1.1.1"
+  }
+}

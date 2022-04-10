@@ -315,3 +315,46 @@ export async function createGoogleCalendarEvents(
         });
     });
 }
+
+export async function getTransaction(id: string){
+    console.log('transaction id: ',id)
+    const transaction = firestoreDB.collection('transactions');
+        
+    const db_transaction = await transaction.where('transaction.captureId','==', id).where('status','==','pending').get();
+
+    console.log('stringyfy transactions: ',JSON.stringify(db_transaction))
+    if(db_transaction.docs.length){
+        return db_transaction;
+    }else{
+        return false;
+    }
+
+}
+
+export async function createTransactions(data: any) {
+    const transaction = firestoreDB.collection('transactions');
+  
+    // const payerId = await parsePaymentId(data.transaction.paymentId);
+  
+    transaction.add(data).then((res: any) => {
+    //   console.log(' : ', res);
+      return res
+    }).catch((error: any) => {
+      console.log('transaction not created in db: ',error);
+      return error
+    });
+}
+
+export async function updateTransaction(id: any, data: any) {
+    const transaction = firestoreDB.collection('transactions');
+  
+    // const payerId = await parsePaymentId(data.transaction.paymentId);
+  
+    transaction.doc(id).update(data).then((res: any) => {
+    //   console.log('transaction updated: ', res);
+      return res
+    }).catch((error: any) => {
+      console.log('transaction updated failed in db: ',error);
+      return error
+    });
+}

@@ -6,6 +6,8 @@ import * as nodemailer from 'nodemailer';
 import * as smtpTransport from 'nodemailer-smtp-transport';
 import * as OpenTok from 'opentok';
 
+import { paypalWebhook } from './functions-paypal';
+
 import {
   onCancelledBooking,
   sendEmailOnBookingCancel,
@@ -359,3 +361,40 @@ exports.freeIntakeRequest = functions.firestore
         `\nFounder`,
     });
   });
+
+//BRAINTREE PAYPAL
+// exports.createCustomerWithPayment = functions.https.onRequest((req: Request, res: functions.Response) => {
+//     cors(req, res,  () => createCustomerWithPayment(req, res));
+// });
+
+// exports.findCustomer = functions.https.onRequest((req: Request, res: functions.Response) => {
+//     cors(req, res,  () => findCustomer(req, res));
+// });
+// exports.createPaymentMethod = functions.https.onRequest((req: Request, res: functions.Response) => {
+//     cors(req, res,  () => createPaymentMethod(req, res));
+// });
+
+// exports.updatePaymentMethod = functions.https.onRequest((req: Request, res: functions.Response) => {
+//     cors(req, res,  () => updatePaymentMethod(req, res));
+// });
+
+// exports.testFun = functions.https.onRequest((req: Request, res: functions.Response) => {
+//     cors(req, res,  () => fiveMinutesScheduledFunction());
+// });
+
+exports.paypalWebhook = functions.https.onRequest((req: Request, res: functions.Response) => {
+  cors(req, res,  () => paypalWebhook(req,res));
+});
+
+
+// exports.testAPI = functions.https.onRequest((req: Request, res: functions.Response) => {
+//     cors(req, res,  () => testSession(req, res));
+// });
+
+// exports.testSale = functions.https.onRequest((req: Request, res: functions.Response) => {
+//     cors(req, res,  () => testSale(req, res));
+// });
+
+// exports.testPay = functions.https.onRequest((req: Request, res: functions.Response) => {
+//     cors(req, res,  () => paypalPayout(req, res));
+// });

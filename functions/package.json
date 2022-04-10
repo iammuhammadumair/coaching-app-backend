@@ -13,6 +13,7 @@
   },
   "main": "lib/index.js",
   "dependencies": {
+    "@paypal/payouts-sdk": "^1.1.1",
     "firebase-admin": "^9.11.1",
     "firebase-functions": "^3.19.0",
     "googleapis": "^66.0.0",
