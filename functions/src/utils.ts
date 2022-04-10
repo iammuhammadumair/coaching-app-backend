@@ -32,13 +32,13 @@ export class Booking {
         strDate += ` (${jsdate.tz()})`;
     }
     else {
-        jsdate = moment(bookingDate);
+        jsdate = moment(bookingDate).subtract(2, 'hours');
         strDate = jsdate.format('MMMM Do, YYYY h:mma');
     }
     const body = `Hello,`+
                  `This is a friendly reminder from Succeed.` +   
                  `\nAre you ready for your session with ${client.firstname}, ${client.lastname} tomorrow? `+ 
-                 `\nYou are booked on ${strDate}. Open your calendar and tap on the orange coloured date ` +
+                 `\nYou booked on ${strDate}. Open your calendar and tap on the orange coloured date ` +
                  `\nand time. You see the name of your client. By tapping on the name, the video call session `+ 
                  `\nopens. Your client will appear. Please remember to write notes on the timeline after the session has ended. `+
                  `\nYour client appreciates that a great deal.`+
@@ -77,11 +77,11 @@ export async function sendSecondBookingReminderToCoach(booking: Booking): Promis
     //     strDate = jsdate.format('MMMM Do, YYYY h:mma');
     // }
     const body =   `Are you ready for your session with ${client.firstname}, ${client.lastname}? ` +
-                   `They will come to see you within 15 minutes. Open your calendar and tap on the orange ` +
-                   `coloured date and time. You see the name of your client. By tapping on the name, the video `+
-                   `call session opens. Your client will appear. ` +
-                   `Please remember to write notes on the timeline after the session has ended. ` +
-                   `Your client appreciates that a great deal.`+
+                   `\nThey will come to see you within 15 minutes. Open your calendar and tap on the orange ` +
+                   `\ncoloured date and time. You see the name of your client. By tapping on the name, the video `+
+                   `\ncall session opens. Your client will appear. ` +
+                   `\nPlease remember to write notes on the timeline after the session has ended. ` +
+                   `\nYour client appreciates that a great deal.`+
                    `\nKind regards,` + 
                    `\n\nYosara Geerlings` +
                    `\nFounder` +
@@ -120,9 +120,9 @@ export async function sendBookingReminderToClient(booking: Booking): Promise<boo
     }
     const body = `Hello,`+
                  `\n\nThis is a friendly reminder from Succeed. `+
-                 `Are you ready for your session with ${coach.coachName} tomorrow? `+
-                 `You booked at ${strDate}. time].Please try to be on time, `+ 
-                 `${coach.coachName} is waiting  and ready to work with you. `+
+                 `\nAre you ready for your session with ${coach.coachName} tomorrow? `+
+                 `\nYou booked at ${strDate}. Please try to be on time, `+ 
+                 `\n${coach.coachName} is waiting and ready to work with you. `+
                  `\nKind whishes,` +
                  `\n\nYosara Geerlings` +
                  `\nFounder` +

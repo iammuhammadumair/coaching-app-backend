@@ -16,6 +16,7 @@ import {
 } from './functions-firestore';
 import {
   createBankAccount,
+  createOtherBankAccount,
   createCardRegistration,
   createNaturalUsers,
   createSession,
@@ -23,6 +24,7 @@ import {
   getAccessToken,
   getUserCards,
   updateCardRegistration,
+  createKycDocument,
 } from './functions-http';
 import {
   everyTwoDaysScheduledFunction,
@@ -173,6 +175,16 @@ exports.createNaturalUsers = functions.https.onRequest(
 exports.createBankAccount = functions.https.onRequest(
   (req: Request, res: functions.Response) => {
     cors(req, res, () => createBankAccount(req, res));
+  }
+);
+exports.createOtherBankAccount = functions.https.onRequest(
+  (req: Request, res: functions.Response) => {
+    cors(req, res, () => createOtherBankAccount(req, res));
+  }
+);
+exports.createKycDocument = functions.https.onRequest(
+  (req: Request, res: functions.Response) => {
+    cors(req, res, () => createKycDocument(req, res));
   }
 );
 

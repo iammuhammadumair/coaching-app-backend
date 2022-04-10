@@ -8,7 +8,7 @@ const mangopayApi = new mangopay({
     baseUrl: 'https://api.mangopay.com'
 //   clientId: 'suceed',
 //   clientApiKey: 'qsaMyuUiw0vvGP78vqkZKV5KyFXDk8cvukLQ9Ct53YbN159RPS',
-  // Set the right production API url. If testing, omit the property since it defaults to sandbox URL
+// //   Set the right production API url. If testing, omit the property since it defaults to sandbox URL
 //   baseUrl: 'https://api.sandbox.mangopay.com'
 });
 
@@ -138,7 +138,74 @@ export async function createBankAccount(req: any, res: any) {
         res.status(200).send({error: true, message: 'Bank account creation failed', errorRes});
     }
 }
+export async function createOtherBankAccount(req: any, res: any) {
+    try {
+        if (!req || !req.body) {
+            console.log('Request body is empty');
+            return res.status(200).send({error: true, message: 'Request body is empty'});
+        }
+        console.log(req.body);
+        if (!req || !req.body.UserId) {
+            console.log('UserId is required');
+            return res.status(200).send({error: true, message: 'UserId is required'});
+        }
+        if (!req || !req.body.bankAccount) {
+            console.log('Bank account info is required');
+            return res.status(200).send({error: true, message: 'Bank account info is required'});
+        }
+        mangopayApi.Users.createBankAccount(
+            req.body.UserId, {...req.body.bankAccount,  Type: 'OTHER'}
+        ).then((mangoRes: any) => {
+            return res.status(200).send({data: mangoRes});
+        }).catch((errorRes: any) => {
+            console.log(errorRes);
+            return res.status(200).send({error: true, message: 'Bank account creation failed. Request error.', errorRes});
+        });
+    } catch (errorRes) {
+        res.status(200).send({error: true, message: 'Bank account creation failed', errorRes});
+    }
+}
 
+export async function createKycDocument(req:any,res:any){
+    console.log(req.body)
+    const UserId = '2256778067';
+    try {
+        // if (!req || !req.body) {
+        //     console.log('Request body is empty');
+        //     return res.status(200).send({error: true, message: 'Request body is empty'});
+        // }
+        // console.log(req.body);
+        // if (!req || !req.body.UserId) {
+        //     console.log('UserId is required');
+        //     return res.status(200).send({error: true, message: 'UserId is required'});
+        // }
+      
+        let kycDocument = {
+        Type: "IDENTITY_PROOF"
+        }
+       
+        console.log(req.body)
+        mangopayApi.Users.createKycDocument(
+            UserId,{...kycDocument, Type: 'IDENTITY_PROOF'}).then((mangoRes: any) => {
+                console.log(req.body)
+            return res.status(200).send({data: mangoRes});
+        }).catch((errorRes: any) => {
+            console.log(errorRes);
+            return res.status(200).send({error: true, message: 'KYC docuemntation upload failed. Request error.', errorRes});
+        });
+     
+    //  mangopayApi.Users.createKycDocument(req.body.coachid, {
+    //             Type: 'IDENTITY_PROOF'
+    //         }).then(function (data: any) {
+    //             console.log('data uploaded')
+    //             document = data;
+    //         });
+      
+    } catch (errorRes) {
+        console.log(errorRes)
+        res.status(200).send({error: true, message: 'Bank account Documentation upload failed', errorRes});
+    }
+}
 export async function createWallet(req: any, res: any) {
     try {
         if (!req || !req.body) {

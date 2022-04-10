@@ -309,7 +309,7 @@ async function sendFirstReminder(booking: any) {
 async function sendSecondReminder(booking: any) {
     const today = moment(new Date());
     const bookingDate = moment(new Date(booking.date.seconds * 1000));
-    if (today.diff(bookingDate, 'minutes') <= 59) {
+    if (today.diff(bookingDate, 'minutes') <=15) {
         return;
     }
     if (!booking.secondReminderSendToClient) {
