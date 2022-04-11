@@ -32,7 +32,7 @@ export class Booking {
         strDate += ` (${jsdate.tz()})`;
     }
     else {
-        jsdate = moment(bookingDate).subtract(2, 'hours');
+        jsdate = moment(bookingDate).add(1, 'hours');
         strDate = jsdate.format('MMMM Do, YYYY h:mma');
     }
     const body = `Hello,`+
