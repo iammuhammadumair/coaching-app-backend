@@ -119,13 +119,13 @@ export async function sendBookingReminderToClient(booking: Booking): Promise<boo
         strDate = jsdate.format('MMMM Do, YYYY h:mma');
     }
     const body = `Hello,`+
-                 `\n\nThis is a friendly reminder from Succeed. `+
+                 `\n\nThis is a friendly reminder from Succeed!. `+
                  `\nAre you ready for your session with ${coach.coachName} tomorrow? `+
-                 `\nYou booked at ${strDate}. Please try to be on time, `+ 
+                 `\nYou booked for ${strDate}. Please try to be on time, `+ 
                  `\n${coach.coachName} is waiting and ready to work with you. `+
                  `\nKind whishes,` +
-                 `\n\nYosara Geerlings` +
-                 `\nFounder` +
+                 `\nHere is a link that takes you to your session directly. https://app-3dhomes-int.web.app/session/${booking.id} ` +
+                 `\n\nKind whishes` +
                  `\nSucceed!`;
 
     // Client email
@@ -163,9 +163,8 @@ export async function sendSecondBookingReminderToClient(booking: Booking): Promi
                  `\nwho is waiting and ready to work with you within 15 minutes. ` +
                  `\nWe recommend that you separate yourself from people and other possible interruptions.`+ 
                  `\nSit at ease and indulge your special time.`+
+                 `\nHere is the link that takes you to your session. https://app-3dhomes-int.web.app/session/${booking.id}` +
                  `\nKind whishes,` +
-                 `\n\nYosara Geerlings` +
-                 `\nFounder` +
                  `\nSucceed!`;
 
     // Client email

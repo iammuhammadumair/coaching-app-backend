@@ -96,12 +96,11 @@ export async function sendEmailOnBookingCreate(snap: any, oauth2Client: any) {
             `\n\nYou have booked a session with ${coach.coachName} on ${clientStrDate}. ` +
             `When the time for your session has come, please log in to your account on Succeed. ` +
             `Open your calendar and tap on the orange-coloured date. On the home page `+
-            `you see a button that takes you directly to your calendar. You see the name of your `+ 
+            `you see a button that takes you directly to your calendar. In your calendar, You see the name of your `+ 
             `coach. By tapping on the name, the video call session starts. Your time to grow and ` +
             `learn has come and we love to support you on the journey. Your session is encrypted `+
             `and secured. `+
-            `And don’t worry about forgetting, you will receive a reminder email 15 `+ 
-            `minutes prior to your `+
+            `And don’t worry about forgetting, you will receive two reminders.`+ 
             `session.`+
             `\n\nSincerely,`+
             `\nYosara Geerlings`+
