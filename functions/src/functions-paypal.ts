@@ -1,6 +1,6 @@
 // import * as braintree from 'braintree';
 import * as payoutSDK from '@paypal/payouts-sdk'
-import { getTransaction, getBookingCoach,getBookingClient,updateTransaction } from './utils';
+import { getTransaction,updateTransaction } from './utils';
 import * as functions from 'firebase-functions';
 
 

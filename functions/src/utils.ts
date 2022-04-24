@@ -38,9 +38,9 @@ export class Booking {
     const body = `Hello,`+
                  `This is a friendly reminder from Succeed.` +   
                  `\nAre you ready for your session with ${client.firstname}, ${client.lastname} tomorrow? `+ 
-                 `\nYou booked on ${strDate}. Open your calendar and tap on the orange coloured date ` +
-                 `\nand time. You see the name of your client. By tapping on the name, the video call session `+ 
-                 `\nopens. Your client will appear. Please remember to write notes on the timeline after the session has ended. `+
+                 `\nYou are booked on ${strDate}. Open your calendar and tap on the orange coloured date ` +
+                 `\nand time. You see the name of your client. By tapping on the name, the video call session opens. `+ 
+                 `\nYour client will appear. Please remember to write notes on the timeline after the session has ended. `+
                  `\nYour client appreciates that a great deal.`+
                  `\nKind regards,` + 
                  `\n\nYosara Geerlings` +
@@ -123,8 +123,7 @@ export async function sendBookingReminderToClient(booking: Booking): Promise<boo
                  `\nAre you ready for your session with ${coach.coachName} tomorrow? `+
                  `\nYou booked for ${strDate}. Please try to be on time, `+ 
                  `\n${coach.coachName} is waiting and ready to work with you. `+
-                 `\nKind whishes,` +
-                 `\nHere is a link that takes you to your session directly. https://app-3dhomes-int.web.app/session/${booking.id} ` +
+                 `\nHere is a link that takes you to your session directly. https://succeed.world/session/${booking.id} ` +
                  `\n\nKind whishes` +
                  `\nSucceed!`;
 
@@ -163,7 +162,7 @@ export async function sendSecondBookingReminderToClient(booking: Booking): Promi
                  `\nwho is waiting and ready to work with you within 15 minutes. ` +
                  `\nWe recommend that you separate yourself from people and other possible interruptions.`+ 
                  `\nSit at ease and indulge your special time.`+
-                 `\nHere is the link that takes you to your session. https://app-3dhomes-int.web.app/session/${booking.id}` +
+                 `\nHere is the link that takes you to your session. https://succeed.world/session/${booking.id}` +
                  `\nKind whishes,` +
                  `\nSucceed!`;
 
@@ -286,12 +285,14 @@ export async function createGoogleCalendarEvents(
             refresh_token: tokens.refresh_token,
             expiry_date: tokens.expiry_date
         };
+        console.log(credentials)
         oauth2Client.setCredentials(credentials);
 
         // event data
         const bookingDate = new Date(booking.date.seconds * 1000);
 
         const calendar = google.calendar({version: 'v3', oauth2Client});
+        console.log(calendar)
         calendar.events.insert({
             auth: oauth2Client,
             calendarId: 'primary',
