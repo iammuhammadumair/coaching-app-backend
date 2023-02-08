@@ -2,7 +2,7 @@
 # Caching Application
 Online Personal Professional And Professional Coaching
 
-## About
+## About Coaching
 Place for coaches and leaders that look for continued growth. The online training covers Clean Language and modern NLP for coaching and leadership.
 
 Besides NLP & Clean Language, principles of DISC are incorporated in the sessions.
@@ -19,13 +19,6 @@ Node.js 14 or higher is required.
 
 Installation is done using the
 [`npm install` command](https://docs.npmjs.com/getting-started/installing-npm-packages-locally):
-
-```console
-$ npm install express
-```
-
-Follow [installing guide](http://expressjs.com/en/starter/installing.html)
-for more information.
 
 ## Features
 
