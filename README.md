@@ -2,7 +2,7 @@
 # Caching Application
 Online Personal Professional And Professional Coaching
 
-## About Coaching
+## About
 Place for coaches and leaders that look for continued growth. The online training covers Clean Language and modern NLP for coaching and leadership.
 
 Besides NLP & Clean Language, principles of DISC are incorporated in the sessions.
