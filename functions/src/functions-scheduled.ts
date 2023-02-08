@@ -20,20 +20,34 @@ const mangopayApi = new mangopay({
 //   baseUrl: 'https://api.sandbox.mangopay.com'
 });
 
-export async  function fiveMinutesScheduledFunction() {
+export async  function fiveMinutesScheduledFunction(req, res) {
     console.log('This will run every 5 minutes!');
     const start = moment(new Date()).subtract(1, 'day');
     const end = moment(new Date()).add(1, 'day');
-
+    console.log('start =>' ,  start);
+    
     console.log(`charging pending sessions...`);
-
-    console.log(`getting bookings between ${start.format()} and ${end.format}`);
+    console.log('new Date() =>' , new Date());
+    
+    console.log(`getting bookings between ${start.format()} and ${end.format()}`);
     const bookingsRef = firestoreDB.collection('bookings');
+    // console.log('bookingsRef =>' , bookingsRef)
     const bookings = await bookingsRef.orderBy('date', 'asc').startAt(start.toDate())
                                       .endAt(end.toDate()).get();
-
+    // console.log('bookings =>' , bookings.docs);
+    
     console.log(`bookings found: ${bookings.docs.length}`);
+    // return res.status(200).send({});
+
     for (const booking of bookings.docs) {
+        console.log('booking =>' , booking.id);
+        return res.status(200).send({
+            data: booking.data(),
+            id: booking.id
+        });
+
+        // return res.status(200).send({});
+        
         const data = booking.data();
         if (data) {
             const bookingData = data ? {...data, id: booking.id} : null;
@@ -42,7 +56,7 @@ export async  function fiveMinutesScheduledFunction() {
             chargeForSession(bookingData).catch(err => handleError(err, 'chargeForSession'));
         }
     }
-    return null;
+    return res.status(200).send({});
 }
 
 export async function firstOfMonthScheduledFunction() {

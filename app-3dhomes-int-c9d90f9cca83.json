@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "app-3dhomes-int",
+  "private_key_id": "c9d90f9cca83e11acffbf491f4cbeeb3ebcd3fad",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCnt9cAb5nEAlfd\nfN5JGkgDQgLBzSOIOGnkCN3+J4EvT1aDKd9JBwln4sniNyqWUJ4cFJNwqVbLZKTY\nJNePdcOQoVBUOOcpGfYhY82SU9DtDhQwosWtga4cS324vF6aU6HX2+45zs9vG4W2\nIwy0EYzgL5spi1GMTtjSFSzuHuW15d9PIYMPX0MMSWXTdNPLhXsKWvWBOAO6wocQ\nnAvb4EngoAMZgH4HhLUtJ/4+eI21weNxsRpSNX4W/DcT3TWGlR/Gj2i7rxjCOPNK\n8XiO1NEzhnqSi38TOK7SUokHszQ0Ss3+smUW/FDt1IEeonbv9uJzslfSJ+LQVku1\nX2BKhX4dAgMBAAECggEAApJZXx3W9aaNjCb6gS3aFdOAyrgnbjkwBazNiDSfdy2L\nWsAdHUSlp1/Wwm7st1i6glBRQT4V4R3rDMKZdY8taP3R1ADG9p5Gly6te8Voo86x\njsKOlZr/I8FULUcVWKtyOCbP3J4OfmcliGxTXD16ptAqdZtRX319nWo96DoCdRgJ\nvPerZ9HNdRsW72wPd+NDN8dl8wKLkMh5kc1ZBolvfqsnhvN09imFvZx85H5KCPKf\nZmBHTRuXbBAhhu9MQ3jA63GagdnF1FzTj8SMlJE+r/u6zfd6qcoCRLeLehmXiNRF\nyM0fHZ2Cfbw116Y6VhxL1Lzjj8RiUtPcjJ5RsvVK1wKBgQDrd+OqbKTd3bqKrM5K\nnyaqfG5zULs+wrTxeeoI+MsRv+bZ/4WYotJ1ScDAFRd8qQhlNdvfqYSSH7s0WQd0\nhVGIr3FTE62aEioHHa2OUcdMP0HgkyXbkIDe0Rf4fI52sQOkSTWG47UAnNAV+dLi\nztt/r92nEyzZQehFdnmCwG0iRwKBgQC2V6Jt2LU6yf7cJDtDJ8BiFV8Jqg5qzhxS\nL+ySV3ag1GmgztUWdCNo2AI1EmE2VgCBeCnjkBV9d1Rf0yhLPa/PmEvTNAXBF61S\nLk6aMPidoecCRLgYHlpa3QZxp/1FPTguGOp1NS7HjecNJpODBpQ6vBtVTSVanYpV\nTN3JCabKewKBgHJLQFvh3mi/DqPvWzbHZ5pLScV5g1nkYrXvilUOhms4LdLU/8Dm\nD6fUw9W4pyzgU23lJbO78diHxHOVX1QEvl3NYwGDRLnLZVEM68hwE4AEGHLsmeyo\niJUfAzafJvuf0ne0/WFbN+lzNGHmYKGs7Mhe0gUd/p/6KMdGyZZY1uBTAoGAesvD\nmGQzkDbOSqSfwFb56VPpH9IFSYoqanLZx6fdPOwvglsoB6oI2qd1vRX2n6gFSSuK\nUjULM+ZzzOCgJyOQzaYLkl1bbrEqSMjkqFRIaafJsa5jp+JxCPYGS+5M0x8qQWkI\nJAy/xyXaLvIGr1tz4aYiZizA9ihYK5/LUIMObxcCgYA0zuqPOrbasJ+mU5GdgXYD\n0EzWCiKf+yqsAibl/6fC5jzu6UpkYmTMbBLVGuHXVLSfB0/PzevlOoyMbni6J+8r\nmwt2kSTp/nHIvGPOgIGmeN7PpaWUH887z4Cs9CGpyQrotQBdjOooSEqrorq9RxOX\nnfqTBIiSC1TcCnM2616qSQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "local-179@app-3dhomes-int.iam.gserviceaccount.com",
+  "client_id": "101911424387377223244",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/local-179%40app-3dhomes-int.iam.gserviceaccount.com"
+}

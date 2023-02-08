@@ -113,9 +113,16 @@ exports.sendEmailOnBookingCancel = functions.firestore
     return await sendEmailOnBookingCancel(snap);
   });
 
-exports.fiveMinutesScheduledFunction = functions.pubsub
-  .schedule("every 5 minutes")
-  .onRun(async () => fiveMinutesScheduledFunction());
+
+exports.fiveMinutesScheduledFunction = functions.https.onRequest(
+  (req: Request, res: functions.Response) => {
+    cors(req, res, () => fiveMinutesScheduledFunction(req, res));
+  }
+);
+
+// exports.fiveMinutesScheduledFunction = functions.pubsub
+//   .schedule("every 5 minutes")
+//   .onRun(async () => fiveMinutesScheduledFunction());
 
 exports.everyTwoDaysScheduledFunction = functions.pubsub
   .schedule("every 48 hours")
